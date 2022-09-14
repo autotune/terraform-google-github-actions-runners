@@ -17,20 +17,26 @@
 
 resource "google_service_account" "sa" {
   project    = var.project_id
-  account_id = "test-storage-sa"
+  account_id = var.account_id 
 }
 
-resource "google_project_iam_member" "project" {
-  project = var.project_id
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.sa.email}"
+resource "google_project_iam_member" "owner" {
+  project     = var.project_id
+  role        = "roles/owner"
+  member      = "serviceAccount:${google_service_account.sa.email}"
+}
+
+resource "google_organization_iam_member" "binding" {
+  org_id = var.org_id
+  role   = "roles/billing.admin"
+  member = "serviceAccount:${google_service_account.sa.email}"
 }
 
 module "oidc" {
   source      = "../../modules/gh-oidc"
   project_id  = var.project_id
-  pool_id     = "example-pool"
-  provider_id = "example-gh-provider"
+  pool_id     = "terrateam-tf"
+  provider_id = "terrateam-gh-provider"
   sa_mapping = {
     (google_service_account.sa.account_id) = {
       sa_name   = google_service_account.sa.name

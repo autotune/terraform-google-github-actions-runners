@@ -17,4 +17,17 @@
 variable "project_id" {
   type        = string
   description = "The project id to create WIF pool and example SA"
+  default     = "terrateam-362405"
+}
+
+variable "org_id" {
+  type        = string
+  description = "The org id to create WIF pool and example SA"
+  default     = "843066650066"
+}
+
+variable "account_id" {
+  type        = string
+  description = "Account ID"
+  default     = "terrateam-tf"
 }
