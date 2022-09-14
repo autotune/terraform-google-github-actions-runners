@@ -17,13 +17,19 @@
 
 resource "google_service_account" "sa" {
   project    = var.project_id
-  account_id = "terrateam-tf"
+  account_id = var.account_id 
 }
 
-resource "google_project_iam_member" "project" {
-  project = var.project_id
-  role    = "roles/editor"
-  member  = "serviceAccount:${google_service_account.sa.email}"
+resource "google_project_iam_member" "owner" {
+  project     = var.project_id
+  role        = "roles/owner"
+  member      = "serviceAccount:${google_service_account.sa.email}"
+}
+
+resource "google_organization_iam_member" "binding" {
+  org_id = var.org_id
+  role   = "roles/billing.admin"
+  member = "serviceAccount:${google_service_account.sa.email}"
 }
 
 module "oidc" {
