@@ -41,6 +41,8 @@ resource "google_iam_workload_identity_pool_provider" "main" {
 resource "google_service_account_iam_member" "wif-sa" {
   for_each           = var.sa_mapping
   service_account_id = each.value.sa_name
-  role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.main.name}/${each.value.attribute}"
+  role               = "roles/editor"
+  member             = "principalSet://iam.googleapis.com/projects/1037290380438/locations/global/workloadIdentityPools/terrateam-tf/*"
 }
+
+

@@ -72,7 +72,6 @@ variable "attribute_mapping" {
     "google.subject"       = "assertion.sub"
     "attribute.actor"      = "assertion.actor"
     "attribute.aud"        = "assertion.aud"
-    "attribute.repository" = "assertion.repository"
   }
 }
 
@@ -88,5 +87,5 @@ variable "sa_mapping" {
     attribute = string
   }))
   description = "Service Account resource names and corresponding WIF provider attributes. If attribute is set to `*` all identities in the pool are granted access to SAs."
-  default     = {}
+  default     = {} 
 }
